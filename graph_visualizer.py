@@ -11,6 +11,7 @@ Just import the visualize() function from this file to use.
 
 import networkx as nx
 import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap as Basemap
 
 def visualize(graph, array, x_offset=0, y_offset=0, scale=1):
     '''
@@ -24,10 +25,25 @@ def visualize(graph, array, x_offset=0, y_offset=0, scale=1):
     pos = {}
     name = {}
 
+    # Set up basemap
+    m = Basemap(
+        projection='merc',
+        ellps = 'WGS84',
+        llcrnrlon=-130,
+        llcrnrlat=25,
+        urcrnrlon=-60,
+        urcrnrlat=50,
+        lat_ts=0,
+        resolution='i',
+        suppress_ticks=True)
+
     for u in range(n):
         # calculate position
         x = (array[u][2] * scale) + x_offset
         y = (array[u][1] * scale) + y_offset
+
+        # Basemap converts lat and long to map coordinates
+        x,y = m(x, y)
 
         # populate dicts
         pos[u] = x,y
@@ -44,9 +60,25 @@ def visualize(graph, array, x_offset=0, y_offset=0, scale=1):
                 G.add_edge(u, v, weight=graph[u][v])
 
 
-    nx.draw_networkx(G, pos=pos, labels=name)
+    
+
+    m.drawcountries()
+    m.drawstates()
+    m.fillcontinents(color='#888888')
+
+
+    nx.draw_networkx(G,
+                     pos=pos,
+                     labels=name,
+                     font_size=8,
+                     node_size=20,
+                     node_color='#33ccff',
+                     edge_color='white')
     plt.show()
 
     '''
-    TO DO: Need to figure out basemap points relative to real world coordinates
+    TO DO:
+    * City name overlapping in eastern corridor
+    * Color scheme?
+    * Automate output to image file
     '''

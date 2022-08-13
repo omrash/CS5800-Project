@@ -31,9 +31,7 @@ def main():
     for i in range(len(top48)):
         data.append((top48[i][0], top48[i][5], top48[i][6]))
 
-    print(data)
-
-    visualize(mst, data, 180, 180)
+    visualize(mst, data)
 
 if __name__=="__main__":
     main()
