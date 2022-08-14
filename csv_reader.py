@@ -26,9 +26,10 @@ def main():
         data[i] = data[i].split(',')
         data[i][4] = int(data[i][4])
         data[i][5], data[i][6] = float(data[i][5]), float(data[i][6])
+        lst = [data[i][0], data[i][5], data[i][6]]
         if data[i][1] not in states:
             states.add(data[i][1])
-            top48.append(data[i])
+            top48.append(lst)
 
     '''
     'data' contains the whole dataset post-processing, 'top48' contains the
@@ -42,8 +43,8 @@ def main():
 
     for i in range(n):
         for j in range(i, n):
-            city1 = top48[i][5], top48[i][6]
-            city2 = top48[j][5], top48[j][6]
+            city1 = top48[i][1], top48[i][2]
+            city2 = top48[j][1], top48[j][2]
             distance = dist(city1, city2)
             adj_matrix[i][j] = distance
             adj_matrix[j][i] = distance

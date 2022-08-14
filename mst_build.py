@@ -1,5 +1,7 @@
 from top48 import *
 
+from analysis_tools import *
+
 from graph_visualizer import visualize
 
 def prim(graph):
@@ -29,9 +31,11 @@ def main():
     data = []
 
     for i in range(len(top48)):
-        data.append((top48[i][0], top48[i][5], top48[i][6]))
+        data.append((top48[i][0], top48[i][1], top48[i][2]))
+
 
     visualize(mst, data)
+
 
 if __name__=="__main__":
     main()
